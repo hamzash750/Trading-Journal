@@ -1,1 +1,44 @@
-<p>journal works!</p>
+<div class="container my-4">
+  <h2 class="mb-3">Trade Journal</h2>
+  <button class="btn btn-primary mb-3" (click)="addTrade()">Add Trade</button>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Script/Symbol</th>
+          <th>Qty</th>
+          <th>Entry Price</th>
+          <th>Exit Price</th>
+          <th>Charges</th>
+          <th>Status</th>
+          <th>Profit/Loss</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trade of trades">
+          <td><input type="date" class="form-control" [(ngModel)]="trade.date"></td>
+          <td>
+            <select class="form-select" [(ngModel)]="trade.type" (change)="updateProfitLoss(trade)">
+              <option value="BUY">BUY</option>
+              <option value="SELL">SELL</option>
+            </select>
+          </td>
+          <td><input type="text" class="form-control" [(ngModel)]="trade.script"></td>
+          <td><input type="number" class="form-control" [(ngModel)]="trade.qty" (input)="updateProfitLoss(trade)"></td>
+          <td><input type="number" class="form-control" [(ngModel)]="trade.entryPrice" (input)="updateProfitLoss(trade)"></td>
+          <td><input type="number" class="form-control" [(ngModel)]="trade.exitPrice" (input)="updateProfitLoss(trade)"></td>
+          <td><input type="number" class="form-control" [(ngModel)]="trade.charges" (input)="updateProfitLoss(trade)"></td>
+          <td>
+            <select class="form-select" [(ngModel)]="trade.status">
+              <option value="Valid">Valid</option>
+              <option value="N/A">N/A</option>
+            </select>
+          </td>
+          <td>{{ trade.profitLoss | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
