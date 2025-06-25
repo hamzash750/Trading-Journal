@@ -15,6 +15,7 @@
           <th>INVESTED AMOUNT</th>
           <th>Status</th>
           <th>Profit/Loss</th>
+          <th>Reason</th>
           <th class="text-center">Actions</th>
         </tr>
       </thead>
@@ -30,13 +31,14 @@
           <td>{{ trade.tradeValue | number:'1.2-2' }}</td>
           <td>{{ trade.status }}</td>
           <td>{{ trade.profitLoss | number:'1.2-2' }}</td>
+          <td>{{ trade.reason }}</td>
           <td class="text-center">
             <button class="btn btn-sm btn-secondary me-1" (click)="openEditModal(i)">Edit</button>
             <button class="btn btn-sm btn-danger" (click)="deleteTrade(i)">Delete</button>
           </td>
         </tr>
         <tr *ngIf="trades.length === 0">
-          <td colspan="11" class="text-center">No trades added yet.</td>
+          <td colspan="12" class="text-center">No trades added yet.</td>
         </tr>
       </tbody>
     </table>
@@ -67,7 +69,12 @@
             </div>
             <div class="col-md-6">
               <label class="form-label">Script/Symbol</label>
-              <input type="text" class="form-control" [(ngModel)]="editingTrade.script" name="script" (input)="onModalFieldChange()">
+              <select class="form-select" [(ngModel)]="editingTrade.script" name="script" (change)="onModalFieldChange()">
+                <option value="US 30">US 30</option>
+                <option value="GOLD">GOLD</option>
+                <option value="NASDQ">NASDQ</option>
+                <option value="UK100">UK100</option>
+              </select>
             </div>
             <div class="col-md-6">
               <label class="form-label">Qty</label>
@@ -99,6 +106,10 @@
             <div class="col-md-6">
               <label class="form-label">Profit/Loss</label>
               <input type="number" class="form-control" [ngModel]="editingTrade.profitLoss" name="profitLoss" disabled>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Reason</label>
+              <textarea class="form-control" [(ngModel)]="editingTrade.reason" name="reason" rows="3"></textarea>
             </div>
           </div>
         </form>
