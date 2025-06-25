@@ -1,8 +1,8 @@
 <div class="container my-4">
   <h2 class="mb-3">Trade Journal</h2>
-  <button class="btn btn-primary mb-3" (click)="addTrade()">Add Trade</button>
+  <button class="btn btn-primary mb-3" (click)="openAddModal()">Add Trade</button>
   <div class="table-responsive">
-    <table class="table table-bordered align-middle">
+    <table class="table table-striped align-middle">
       <thead class="table-light">
         <tr>
           <th>Date</th>
@@ -15,32 +15,99 @@
           <th>INVESTED AMOUNT</th>
           <th>Status</th>
           <th>Profit/Loss</th>
+          <th class="text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let trade of trades">
-          <td><input type="date" class="form-control" [(ngModel)]="trade.date" (change)="save()"></td>
-          <td>
-            <select class="form-select" [(ngModel)]="trade.type" (change)="updateProfitLoss(trade)">
-              <option value="BUY">BUY</option>
-              <option value="SELL">SELL</option>
-            </select>
-          </td>
-          <td><input type="text" class="form-control" [(ngModel)]="trade.script" (input)="save()"></td>
-          <td><input type="number" class="form-control" [(ngModel)]="trade.qty" (input)="updateProfitLoss(trade)"></td>
-          <td><input type="number" class="form-control" [(ngModel)]="trade.entryPrice" (input)="updateProfitLoss(trade)"></td>
-          <td><input type="number" class="form-control" [(ngModel)]="trade.exitPrice" (input)="updateProfitLoss(trade)"></td>
-          <td><input type="number" class="form-control" [(ngModel)]="trade.charges" (input)="updateProfitLoss(trade)"></td>
+        <tr *ngFor="let trade of trades; let i = index">
+          <td>{{ trade.date }}</td>
+          <td>{{ trade.type }}</td>
+          <td>{{ trade.script }}</td>
+          <td>{{ trade.qty }}</td>
+          <td>{{ trade.entryPrice }}</td>
+          <td>{{ trade.exitPrice }}</td>
+          <td>{{ trade.charges }}</td>
           <td>{{ trade.tradeValue | number:'1.2-2' }}</td>
-          <td>
-            <select class="form-select" [(ngModel)]="trade.status" (change)="save()">
-              <option value="Valid">Valid</option>
-              <option value="N/A">N/A</option>
-            </select>
-          </td>
+          <td>{{ trade.status }}</td>
           <td>{{ trade.profitLoss | number:'1.2-2' }}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-secondary me-1" (click)="openEditModal(i)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteTrade(i)">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="trades.length === 0">
+          <td colspan="11" class="text-center">No trades added yet.</td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" [class.show]="modalVisible" [style.display]="modalVisible ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ editingIndex === null ? 'Add Trade' : 'Edit Trade' }}</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Date</label>
+              <input type="date" class="form-control" [(ngModel)]="editingTrade.date" name="date" (change)="onModalFieldChange()">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Type</label>
+              <select class="form-select" [(ngModel)]="editingTrade.type" name="type" (change)="onModalFieldChange()">
+                <option value="BUY">BUY</option>
+                <option value="SELL">SELL</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Script/Symbol</label>
+              <input type="text" class="form-control" [(ngModel)]="editingTrade.script" name="script" (input)="onModalFieldChange()">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Qty</label>
+              <input type="number" class="form-control" [(ngModel)]="editingTrade.qty" name="qty" (input)="onModalFieldChange()">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Entry Price</label>
+              <input type="number" class="form-control" [(ngModel)]="editingTrade.entryPrice" name="entryPrice" (input)="onModalFieldChange()">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Exit Price</label>
+              <input type="number" class="form-control" [(ngModel)]="editingTrade.exitPrice" name="exitPrice" (input)="onModalFieldChange()">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Charges</label>
+              <input type="number" class="form-control" [(ngModel)]="editingTrade.charges" name="charges" (input)="onModalFieldChange()">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Status</label>
+              <select class="form-select" [(ngModel)]="editingTrade.status" name="status" (change)="onModalFieldChange()">
+                <option value="Valid">Valid</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Invested Amount</label>
+              <input type="number" class="form-control" [ngModel]="editingTrade.tradeValue" name="tradeValue" disabled>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Profit/Loss</label>
+              <input type="number" class="form-control" [ngModel]="editingTrade.profitLoss" name="profitLoss" disabled>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveTrade()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="modalVisible"></div>

@@ -13,14 +13,39 @@ import { Trade } from '../../models/trade';
 })
 export class Journal implements OnInit {
   trades: Trade[] = [];
+  modalVisible = false;
+  editingTrade: Trade = this.createTrade();
+  editingIndex: number | null = null;
 
   ngOnInit() {
     const saved = localStorage.getItem('journalTrades');
-    this.trades = saved ? JSON.parse(saved) : [this.createTrade()];
+    this.trades = saved ? JSON.parse(saved) : [];
   }
 
-  addTrade() {
-    this.trades.push(this.createTrade());
+  openAddModal() {
+    this.editingTrade = this.createTrade();
+    this.editingIndex = null;
+    this.modalVisible = true;
+  }
+
+  openEditModal(index: number) {
+    this.editingTrade = { ...this.trades[index] };
+    this.editingIndex = index;
+    this.modalVisible = true;
+  }
+
+  saveTrade() {
+    if (this.editingIndex === null) {
+      this.trades.push({ ...this.editingTrade });
+    } else {
+      this.trades[this.editingIndex] = { ...this.editingTrade };
+    }
+    this.save();
+    this.modalVisible = false;
+  }
+
+  deleteTrade(index: number) {
+    this.trades.splice(index, 1);
     this.save();
   }
 
@@ -35,7 +60,14 @@ export class Journal implements OnInit {
     } else {
       trade.profitLoss = 0;
     }
-    this.save();
+  }
+
+  onModalFieldChange() {
+    this.updateProfitLoss(this.editingTrade);
+  }
+
+  closeModal() {
+    this.modalVisible = false;
   }
 
   private createTrade(): Trade {
