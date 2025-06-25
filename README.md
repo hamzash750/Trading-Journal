@@ -18,7 +18,7 @@ This project is a web-based trading journal inspired by an Excel spreadsheet use
   - ROI
   - Adjusted Balance
 - Integration link to [Zerodha Brokerage Calculator](https://zerodha.com/brokerage-calculator)
-- Optional data persistence via LocalStorage or API
+- Data automatically persisted to LocalStorage
 - Responsive design for desktop and mobile
 
 ---

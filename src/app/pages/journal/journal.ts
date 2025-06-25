@@ -1,18 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Trade } from '../../models/trade';
 
-interface Trade {
-  date: string;
-  type: 'BUY' | 'SELL';
-  script: string;
-  qty: number;
-  entryPrice: number;
-  exitPrice: number;
-  charges: number;
-  status: 'Valid' | 'N/A';
-  profitLoss: number;
-}
 
 @Component({
   selector: 'app-journal',
@@ -21,14 +11,21 @@ interface Trade {
   templateUrl: './journal.html',
   styleUrl: './journal.css'
 })
-export class Journal {
-  trades: Trade[] = [this.createTrade()];
+export class Journal implements OnInit {
+  trades: Trade[] = [];
+
+  ngOnInit() {
+    const saved = localStorage.getItem('journalTrades');
+    this.trades = saved ? JSON.parse(saved) : [this.createTrade()];
+  }
 
   addTrade() {
     this.trades.push(this.createTrade());
+    this.save();
   }
 
   updateProfitLoss(trade: Trade) {
+    trade.tradeValue = trade.qty * trade.entryPrice;
     if (trade.qty && trade.entryPrice && trade.exitPrice != null) {
       const diff =
         trade.type === 'BUY'
@@ -38,6 +35,7 @@ export class Journal {
     } else {
       trade.profitLoss = 0;
     }
+    this.save();
   }
 
   private createTrade(): Trade {
@@ -50,7 +48,12 @@ export class Journal {
       exitPrice: 0,
       charges: 0,
       status: 'Valid',
+      tradeValue: 0,
       profitLoss: 0,
     };
+  }
+
+  save() {
+    localStorage.setItem('journalTrades', JSON.stringify(this.trades));
   }
 }

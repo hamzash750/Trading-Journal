@@ -3,17 +3,17 @@
   <form class="row g-3">
     <div class="col-md-4">
       <label for="capital" class="form-label">Capital</label>
-      <input id="capital" type="number" class="form-control" [(ngModel)]="capital" name="capital">
+      <input id="capital" type="number" class="form-control" [(ngModel)]="capital" (input)="save()" name="capital">
     </div>
     <div class="col-md-4">
       <label for="withdrawals" class="form-label">Withdrawals</label>
-      <input id="withdrawals" type="number" class="form-control" [(ngModel)]="withdrawals" name="withdrawals">
+      <input id="withdrawals" type="number" class="form-control" [(ngModel)]="withdrawals" (input)="save()" name="withdrawals">
     </div>
   </form>
 
   <div class="my-4">
     <h5>Trades</h5>
-    <button class="btn btn-sm btn-primary mb-2" (click)="trades.push({profitLoss:0,status:'Valid'})">Add Trade</button>
+    <button class="btn btn-sm btn-primary mb-2" (click)="addTrade()">Add Trade</button>
     <div class="table-responsive">
       <table class="table table-bordered align-middle">
         <thead class="table-light">
@@ -25,10 +25,10 @@
         <tbody>
           <tr *ngFor="let trade of trades; let i = index">
             <td>
-              <input type="number" class="form-control" [(ngModel)]="trade.profitLoss" name="pl{{i}}">
+              <input type="number" class="form-control" [(ngModel)]="trade.profitLoss" (input)="save()" name="pl{{i}}">
             </td>
             <td>
-              <select class="form-select" [(ngModel)]="trade.status" name="status{{i}}">
+              <select class="form-select" [(ngModel)]="trade.status" (change)="save()" name="status{{i}}">
                 <option value="Valid">Valid</option>
                 <option value="N/A">N/A</option>
               </select>
