@@ -12,26 +12,28 @@
           <th>Entry Price</th>
           <th>Exit Price</th>
           <th>Charges</th>
+          <th>Value</th>
           <th>Status</th>
           <th>Profit/Loss</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let trade of trades">
-          <td><input type="date" class="form-control" [(ngModel)]="trade.date"></td>
+          <td><input type="date" class="form-control" [(ngModel)]="trade.date" (change)="save()"></td>
           <td>
             <select class="form-select" [(ngModel)]="trade.type" (change)="updateProfitLoss(trade)">
               <option value="BUY">BUY</option>
               <option value="SELL">SELL</option>
             </select>
           </td>
-          <td><input type="text" class="form-control" [(ngModel)]="trade.script"></td>
+          <td><input type="text" class="form-control" [(ngModel)]="trade.script" (input)="save()"></td>
           <td><input type="number" class="form-control" [(ngModel)]="trade.qty" (input)="updateProfitLoss(trade)"></td>
           <td><input type="number" class="form-control" [(ngModel)]="trade.entryPrice" (input)="updateProfitLoss(trade)"></td>
           <td><input type="number" class="form-control" [(ngModel)]="trade.exitPrice" (input)="updateProfitLoss(trade)"></td>
           <td><input type="number" class="form-control" [(ngModel)]="trade.charges" (input)="updateProfitLoss(trade)"></td>
+          <td>{{ trade.tradeValue | number:'1.2-2' }}</td>
           <td>
-            <select class="form-select" [(ngModel)]="trade.status">
+            <select class="form-select" [(ngModel)]="trade.status" (change)="save()">
               <option value="Valid">Valid</option>
               <option value="N/A">N/A</option>
             </select>
