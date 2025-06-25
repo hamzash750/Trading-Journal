@@ -8,12 +8,12 @@ import { Meta, Title } from '@angular/platform-browser';
   styleUrl: './app.css'
 })
 export class App {
- constructor(private title: Title, private meta: Meta) {
-    this.title.setTitle('Free Game Portal - Play Browser Games');
+  constructor(private title: Title, private meta: Meta) {
+    this.title.setTitle('Trading Journal');
 
     this.meta.addTags([
-      { name: 'description', content: 'Enjoy free classic browser games like Tic Tac Toe, Snake, Memory Game and Minesweeper. No login required.' },
-      { name: 'keywords', content: 'Free games, Angular games, browser games, tic tac toe, snake, memory, minesweeper, HTML5 games' },
+      { name: 'description', content: 'Log and analyze your trades with this Angular trading journal.' },
+      { name: 'keywords', content: 'trading journal, trade tracker, stock trading, ROI' },
       { name: 'author', content: 'Hamza Shafique' },
       { name: 'robots', content: 'index, follow' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://hamzash750.github.io/FreeGameRoom/</loc>
+    <loc>https://hamzash750.github.io/TradingJournal/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://hamzash750.github.io/FreeGameRoom/tic-tac-toe</loc>
+    <loc>https://hamzash750.github.io/TradingJournal/tic-tac-toe</loc>
   </url>
   <url>
-    <loc>https://hamzash750.github.io/FreeGameRoom/snake</loc>
+    <loc>https://hamzash750.github.io/TradingJournal/snake</loc>
   </url>
   <url>
-    <loc>https://hamzash750.github.io/FreeGameRoom/memory</loc>
+    <loc>https://hamzash750.github.io/TradingJournal/memory</loc>
   </url>
    <url>
-    <loc>https://hamzash750.github.io/FreeGameRoom/minesweeper</loc>
+    <loc>https://hamzash750.github.io/TradingJournal/minesweeper</loc>
   </url>
    <url>
-    <loc>https://hamzash750.github.io/FreeGameRoom/balloon</loc>
+    <loc>https://hamzash750.github.io/TradingJournal/balloon</loc>
   </url>
    <url>
-    <loc>https://hamzash750.github.io/FreeGameRoom/dice-roll</loc>
+    <loc>https://hamzash750.github.io/TradingJournal/dice-roll</loc>
   </url>
 </urlset>
