@@ -1,1 +1,69 @@
-<p>summary works!</p>
+<div class="container my-4">
+  <h2 class="mb-3">Summary</h2>
+  <form class="row g-3">
+    <div class="col-md-4">
+      <label for="capital" class="form-label">Capital</label>
+      <input id="capital" type="number" class="form-control" [(ngModel)]="capital" name="capital">
+    </div>
+    <div class="col-md-4">
+      <label for="withdrawals" class="form-label">Withdrawals</label>
+      <input id="withdrawals" type="number" class="form-control" [(ngModel)]="withdrawals" name="withdrawals">
+    </div>
+  </form>
+
+  <div class="my-4">
+    <h5>Trades</h5>
+    <button class="btn btn-sm btn-primary mb-2" (click)="trades.push({profitLoss:0,status:'Valid'})">Add Trade</button>
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Profit/Loss</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let trade of trades; let i = index">
+            <td>
+              <input type="number" class="form-control" [(ngModel)]="trade.profitLoss" name="pl{{i}}">
+            </td>
+            <td>
+              <select class="form-select" [(ngModel)]="trade.status" name="status{{i}}">
+                <option value="Valid">Valid</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="my-4">
+    <h5>Summary</h5>
+    <table class="table table-bordered w-auto">
+      <tbody>
+        <tr>
+          <th>Net P&amp;L</th>
+          <td>{{ netPnL | number:'1.2-2' }}</td>
+        </tr>
+        <tr>
+          <th>ROI</th>
+          <td>{{ roi | percent:'1.2-2' }}</td>
+        </tr>
+        <tr>
+          <th>Final Balance</th>
+          <td>{{ finalBalance | number:'1.2-2' }}</td>
+        </tr>
+        <tr>
+          <th>Invalid Trades</th>
+          <td>{{ invalidTrades | number:'1.2-2' }}</td>
+        </tr>
+        <tr>
+          <th>Adjusted Balance</th>
+          <td>{{ adjustedBalance | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
