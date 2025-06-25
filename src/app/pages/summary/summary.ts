@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Trade } from '../../models/trade';
 
 @Component({
   selector: 'app-summary',
@@ -13,30 +14,25 @@ export class Summary implements OnInit {
   capital = 0;
   withdrawals = 0;
 
-  trades: { profitLoss: number; status: 'Valid' | 'N/A' }[] = [];
+  journalTrades: Trade[] = [];
 
   ngOnInit() {
     const savedCap = localStorage.getItem('summaryCapital');
     const savedWith = localStorage.getItem('summaryWithdrawals');
-    const savedTrades = localStorage.getItem('summaryTrades');
+    const savedTrades = localStorage.getItem('journalTrades');
     this.capital = savedCap ? +savedCap : 0;
     this.withdrawals = savedWith ? +savedWith : 0;
-    this.trades = savedTrades ? JSON.parse(savedTrades) : [{ profitLoss: 0, status: 'Valid' }];
+    this.journalTrades = savedTrades ? JSON.parse(savedTrades) : [];
   }
 
   save() {
     localStorage.setItem('summaryCapital', String(this.capital));
     localStorage.setItem('summaryWithdrawals', String(this.withdrawals));
-    localStorage.setItem('summaryTrades', JSON.stringify(this.trades));
   }
 
-  addTrade() {
-    this.trades.push({ profitLoss: 0, status: 'Valid' });
-    this.save();
-  }
 
   get netPnL(): number {
-    return this.trades.reduce((sum, t) => sum + (t.profitLoss || 0), 0);
+    return this.journalTrades.reduce((sum, t) => sum + (t.profitLoss || 0), 0);
   }
 
   get roi(): number {
@@ -48,7 +44,7 @@ export class Summary implements OnInit {
   }
 
   get invalidTrades(): number {
-    return this.trades
+    return this.journalTrades
       .filter(t => t.status === 'N/A')
       .reduce((sum, t) => sum + (t.profitLoss || 0), 0);
   }

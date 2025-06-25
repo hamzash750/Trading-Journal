@@ -13,7 +13,6 @@
 
   <div class="my-4">
     <h5>Trades</h5>
-    <button class="btn btn-sm btn-primary mb-2" (click)="addTrade()">Add Trade</button>
     <div class="table-responsive">
       <table class="table table-bordered align-middle">
         <thead class="table-light">
@@ -23,16 +22,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let trade of trades; let i = index">
-            <td>
-              <input type="number" class="form-control" [(ngModel)]="trade.profitLoss" (input)="save()" name="pl{{i}}">
-            </td>
-            <td>
-              <select class="form-select" [(ngModel)]="trade.status" (change)="save()" name="status{{i}}">
-                <option value="Valid">Valid</option>
-                <option value="N/A">N/A</option>
-              </select>
-            </td>
+          <tr *ngFor="let trade of journalTrades">
+            <td>{{ trade.profitLoss | number:'1.2-2' }}</td>
+            <td>{{ trade.status }}</td>
           </tr>
         </tbody>
       </table>
