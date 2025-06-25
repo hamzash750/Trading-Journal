@@ -82,6 +82,7 @@ export class Journal implements OnInit {
       status: 'Valid',
       tradeValue: 0,
       profitLoss: 0,
+      reason: '',
     };
   }
 

@@ -9,4 +9,5 @@ export interface Trade {
   status: 'Valid' | 'N/A';
   tradeValue: number;
   profitLoss: number;
+  reason: string;
 }
