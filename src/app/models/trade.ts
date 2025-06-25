@@ -6,7 +6,12 @@ export interface Trade {
   entryPrice: number;
   exitPrice: number;
   charges: number;
-  status: 'Valid' | 'N/A';
+  /**
+   * Status derived from the profit/loss amount. A positive P&L
+   * results in "Profit", a negative one in "Loss" and zero in
+   * "Breakeven".
+   */
+  status: 'Profit' | 'Loss' | 'Breakeven';
   tradeValue: number;
   profitLoss: number;
   reason: string;
