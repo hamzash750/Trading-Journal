@@ -60,6 +60,14 @@ export class Journal implements OnInit {
     } else {
       trade.profitLoss = 0;
     }
+
+    if (trade.profitLoss > 0) {
+      trade.status = 'Profit';
+    } else if (trade.profitLoss < 0) {
+      trade.status = 'Loss';
+    } else {
+      trade.status = 'Breakeven';
+    }
   }
 
   onModalFieldChange() {
@@ -79,7 +87,7 @@ export class Journal implements OnInit {
       entryPrice: 0,
       exitPrice: 0,
       charges: 0,
-      status: 'Valid',
+      status: 'Breakeven',
       tradeValue: 0,
       profitLoss: 0,
       reason: '',
