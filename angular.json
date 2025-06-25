@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "game-portal": {
+    "TradingJournal": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -60,10 +60,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "game-portal:build:production"
+              "buildTarget": "TradingJournal:build:production"
             },
             "development": {
-              "buildTarget": "game-portal:build:development"
+              "buildTarget": "TradingJournal:build:development"
             }
           },
           "defaultConfiguration": "development"
