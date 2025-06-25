@@ -1,4 +1,11 @@
-table input,
-table select {
-  min-width: 120px;
+table {
+  min-width: 900px;
+}
+
+.modal-backdrop {
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
 }
